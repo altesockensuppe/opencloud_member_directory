@@ -32,9 +32,6 @@ pnpm build            # build into dist/
 pnpm test:unit --run  # unit tests
 ```
 
-`docker compose up` starts a local OpenCloud at <https://host.docker.internal:9200>
-(`admin` / `admin`) with `dist/` mounted as the app.
-
 ## License
 
 [Apache License 2.0](LICENSE)

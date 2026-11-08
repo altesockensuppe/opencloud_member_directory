@@ -13,8 +13,6 @@ dist
 .idea
 .vscode
 
-# dev setup
-docker-compose.override.yml
 # release packaging
 /package/
 *.zip

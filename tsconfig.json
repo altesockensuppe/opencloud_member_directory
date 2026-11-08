@@ -1,0 +1,10 @@
+{
+  "extends": "@opencloud-eu/tsconfig",
+  "compilerOptions": {
+    "types": ["vitest/globals"],
+    "paths": {
+      // vue3-gettext 2.x doesn't expose its type declarations via package.json "exports"
+      "vue3-gettext": ["./node_modules/vue3-gettext/dist/types/index.d.ts"]
+    }
+  }
+}

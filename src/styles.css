@@ -1,0 +1,17 @@
+@import '@opencloud-eu/extension-sdk/tailwind.css';
+
+/* OpenCloud Web 4.x defines the role colors at runtime, but the 4.x SDK doesn't expose them to Tailwind yet */
+@theme {
+  --color-role-background: var(--oc-role-background);
+  --color-role-error: var(--oc-role-error);
+  --color-role-error-container: var(--oc-role-error-container);
+  --color-role-on-error-container: var(--oc-role-on-error-container);
+  --color-role-on-surface: var(--oc-role-on-surface);
+  --color-role-on-surface-variant: var(--oc-role-on-surface-variant);
+  --color-role-outline: var(--oc-role-outline);
+  --color-role-outline-variant: var(--oc-role-outline-variant);
+  --color-role-primary: var(--oc-role-primary);
+  --color-role-surface: var(--oc-role-surface);
+  --color-role-surface-container: var(--oc-role-surface-container);
+  --color-role-surface-container-low: var(--oc-role-surface-container-low);
+}

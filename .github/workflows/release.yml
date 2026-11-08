@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Check that the tag matches package.json
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match version $version in package.json"
+            exit 1
+          fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+      - run: pnpm lint
+      - run: pnpm check:types
+      - run: pnpm test:unit --run
+      - run: pnpm build
+
+      # the archive contains the app folder, ready to be extracted into the web apps directory
+      - name: Package
+        run: |
+          mkdir -p package/mitgliederverzeichnis
+          cp -r dist/. package/mitgliederverzeichnis/
+          cd package
+          zip -r "../mitgliederverzeichnis-$VERSION.zip" mitgliederverzeichnis
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: mitgliederverzeichnis-${{ env.VERSION }}.zip
+          generate_release_notes: true

@@ -39,12 +39,12 @@ jobs:
       # the archive contains the app folder, ready to be extracted into the web apps directory
       - name: Package
         run: |
-          mkdir -p package/member-directory
-          cp -r dist/. package/member-directory/
+          mkdir -p package/opencloud-member-directory
+          cp -r dist/. package/opencloud-member-directory/
           cd package
-          zip -r "../member-directory-$VERSION.zip" member-directory
+          zip -r "../opencloud-member-directory-$VERSION.zip" opencloud-member-directory
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: member-directory-${{ env.VERSION }}.zip
+          files: opencloud-member-directory-${{ env.VERSION }}.zip
           generate_release_notes: true

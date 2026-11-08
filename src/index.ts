@@ -16,7 +16,7 @@ import StartPage from './views/StartPage.vue'
 import { FILE_EXTENSION } from './model'
 import translations from './translations'
 
-const appId = 'member-directory'
+const appId = 'opencloud-member-directory'
 
 export default defineWebApplication({
   setup() {
@@ -73,7 +73,7 @@ export default defineWebApplication({
         }
       },
       {
-        // the file to edit is encoded in the path, e.g. /member-directory/personal/admin/Members.members
+        // the file to edit is encoded in the path, e.g. /opencloud-member-directory/personal/admin/Members.members
         path: '/:driveAliasAndItem(.*)?',
         name: appId,
         component: AppWrapperRoute(App, {

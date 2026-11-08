@@ -17,7 +17,7 @@ Built for **OpenCloud 4.0.x** (OpenCloud Web 4.2). Newer versions are untested.
 
 ## Installation
 
-1. Download `member-directory-<version>.zip` from the releases.
+1. Download `opencloud-member-directory-<version>.zip` from the releases.
 2. Extract it into the web apps directory, e.g. `$OC_DATA_DIR/web/assets/apps/` or
    `config/opencloud/apps/` with [opencloud-compose](https://github.com/opencloud-eu/opencloud-compose).
 3. Restart OpenCloud.

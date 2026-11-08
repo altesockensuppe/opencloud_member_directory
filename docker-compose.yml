@@ -19,7 +19,7 @@ services:
       - '9200:9200'
     volumes:
       - opencloud-config:/etc/opencloud
-      - ./dist:/web/apps/mitgliederverzeichnis
+      - ./dist:/web/apps/member-directory
 
 volumes:
   opencloud-config:

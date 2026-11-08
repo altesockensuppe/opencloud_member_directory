@@ -1,6 +1,6 @@
 import { Translator, formatIsoDate } from './i18n'
 
-export const FILE_EXTENSION = 'mitglieder'
+export const FILE_EXTENSION = 'members'
 export const SCHEMA_VERSION = 1
 
 export type FieldType =
@@ -75,26 +75,26 @@ export const generateId = (): string => {
  * Labels and options are data from then on, so they are not translated again later.
  */
 export const defaultFields = ({ t }: Translator): FieldDefinition[] => [
-  { id: 'nummer', label: t('Member no.'), type: 'text', showInList: true },
+  { id: 'member_no', label: t('Member no.'), type: 'text', showInList: true },
   {
-    id: 'anrede',
+    id: 'salutation',
     label: t('Salutation'),
     type: 'select',
     options: [t('Ms'), t('Mr'), t('Diverse')],
     showInList: false
   },
-  { id: 'vorname', label: t('First name'), type: 'text', showInList: true },
-  { id: 'nachname', label: t('Last name'), type: 'text', showInList: true },
-  { id: 'strasse', label: t('Street / No.'), type: 'text', showInList: true },
-  { id: 'plz', label: t('Postcode'), type: 'text', showInList: true },
-  { id: 'ort', label: t('City'), type: 'text', showInList: true },
-  { id: 'land', label: t('Country'), type: 'text', showInList: false },
-  { id: 'geburtsdatum', label: t('Date of birth'), type: 'date', showInList: true },
+  { id: 'first_name', label: t('First name'), type: 'text', showInList: true },
+  { id: 'last_name', label: t('Last name'), type: 'text', showInList: true },
+  { id: 'street', label: t('Street / No.'), type: 'text', showInList: true },
+  { id: 'postcode', label: t('Postcode'), type: 'text', showInList: true },
+  { id: 'city', label: t('City'), type: 'text', showInList: true },
+  { id: 'country', label: t('Country'), type: 'text', showInList: false },
+  { id: 'birth_date', label: t('Date of birth'), type: 'date', showInList: true },
   { id: 'email', label: t('Email'), type: 'email', showInList: true },
-  { id: 'telefon', label: t('Phone'), type: 'tel', showInList: false },
+  { id: 'phone', label: t('Phone'), type: 'tel', showInList: false },
   { id: 'mobile', label: t('Mobile'), type: 'tel', showInList: true },
-  { id: 'eintritt', label: t('Date joined'), type: 'date', showInList: false },
-  { id: 'austritt', label: t('Date left'), type: 'date', showInList: false },
+  { id: 'date_joined', label: t('Date joined'), type: 'date', showInList: false },
+  { id: 'date_left', label: t('Date left'), type: 'date', showInList: false },
   {
     id: 'status',
     label: t('Status'),
@@ -102,7 +102,7 @@ export const defaultFields = ({ t }: Translator): FieldDefinition[] => [
     options: [t('Active'), t('Passive'), t('Honorary member'), t('Resigned')],
     showInList: true
   },
-  { id: 'bemerkungen', label: t('Notes'), type: 'textarea', showInList: false }
+  { id: 'notes', label: t('Notes'), type: 'textarea', showInList: false }
 ]
 
 export const createDirectory = (translator: Translator, title?: string): MemberDirectory => ({
@@ -256,11 +256,11 @@ export const matchesSearch = (
 
 /** Proposes the next member number: highest numeric value + 1 */
 export const nextMemberNumber = (directory: MemberDirectory): string | undefined => {
-  if (!directory.fields.some((f) => f.id === 'nummer')) {
+  if (!directory.fields.some((f) => f.id === 'member_no')) {
     return undefined
   }
   const numbers = directory.members
-    .map((m) => parseInt(String(m.values.nummer ?? ''), 10))
+    .map((m) => parseInt(String(m.values.member_no ?? ''), 10))
     .filter((n) => !Number.isNaN(n))
   return String(numbers.length ? Math.max(...numbers) + 1 : 1)
 }

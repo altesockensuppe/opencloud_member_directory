@@ -279,7 +279,7 @@ watch(
 )
 
 const search = ref('')
-const sortField = ref<string>('nachname')
+const sortField = ref<string>('last_name')
 const sortDirection = ref<'asc' | 'desc'>('asc')
 
 const listFields = computed(() => directory.value?.fields.filter((f) => f.showInList) ?? [])
@@ -342,24 +342,24 @@ const editingTitle = computed(() => {
   if (!editing.value?.id) {
     return t('New member')
   }
-  const { vorname, nachname } = editing.value.values
-  const name = [vorname, nachname].filter((v) => typeof v === 'string' && v).join(' ')
+  const { first_name: firstName, last_name: lastName } = editing.value.values
+  const name = [firstName, lastName].filter((v) => typeof v === 'string' && v).join(' ')
   return name || t('Member')
 })
 
 const openNewMember = () => {
   const values: MemberValues = {}
-  const nummer = directory.value && nextMemberNumber(directory.value)
-  if (nummer) {
-    values.nummer = nummer
+  const memberNo = directory.value && nextMemberNumber(directory.value)
+  if (memberNo) {
+    values.member_no = memberNo
   }
   // the first status option is the default ("Active" in a new directory)
   const defaultStatus = directory.value?.fields.find((f) => f.id === 'status')?.options?.[0]
   if (defaultStatus) {
     values.status = defaultStatus
   }
-  if (directory.value?.fields.some((f) => f.id === 'eintritt')) {
-    values.eintritt = new Date().toISOString().slice(0, 10)
+  if (directory.value?.fields.some((f) => f.id === 'date_joined')) {
+    values.date_joined = new Date().toISOString().slice(0, 10)
   }
   editing.value = { id: null, values }
 }
@@ -389,7 +389,7 @@ const deleteMember = (member: Member) => {
   if (!directory.value) {
     return
   }
-  const name = [member.values.vorname, member.values.nachname].filter(Boolean).join(' ')
+  const name = [member.values.first_name, member.values.last_name].filter(Boolean).join(' ')
   const question = name
     ? t('Really delete member %{name}?', { name: `“${name}”` })
     : t('Really delete this member?')

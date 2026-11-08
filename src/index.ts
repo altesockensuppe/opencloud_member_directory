@@ -16,7 +16,7 @@ import StartPage from './views/StartPage.vue'
 import { FILE_EXTENSION } from './model'
 import translations from './translations'
 
-const appId = 'mitgliederverzeichnis'
+const appId = 'member-directory'
 
 export default defineWebApplication({
   setup() {
@@ -58,7 +58,7 @@ export default defineWebApplication({
         }
       )
     } catch (e) {
-      console.warn('Mitgliederverzeichnis: app name will not follow the language setting', e)
+      console.warn('Member directory: app name will not follow the language setting', e)
     }
 
     const routes: RouteRecordRaw[] = [
@@ -73,7 +73,7 @@ export default defineWebApplication({
         }
       },
       {
-        // the file to edit is encoded in the path, e.g. /mitgliederverzeichnis/personal/admin/Mitglieder.mitglieder
+        // the file to edit is encoded in the path, e.g. /member-directory/personal/admin/Members.members
         path: '/:driveAliasAndItem(.*)?',
         name: appId,
         component: AppWrapperRoute(App, {

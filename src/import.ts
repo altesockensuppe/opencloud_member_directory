@@ -113,7 +113,7 @@ const normalize = (value: string) =>
 
 /** Common alternative column names (German and English), keyed by the default field ids */
 const SYNONYMS: Record<string, string[]> = {
-  nummer: [
+  member_no: [
     'nr',
     'mitgliedernr',
     'mitgliedernummer',
@@ -126,10 +126,10 @@ const SYNONYMS: Record<string, string[]> = {
     'membernumber',
     'memberid'
   ],
-  anrede: ['anrede', 'salutation', 'title'],
-  vorname: ['vorname', 'firstname', 'givenname', 'forename', 'prenom'],
-  nachname: ['nachname', 'name', 'familienname', 'lastname', 'surname', 'familyname', 'nom'],
-  strasse: [
+  salutation: ['anrede', 'salutation', 'title'],
+  first_name: ['vorname', 'firstname', 'givenname', 'forename', 'prenom'],
+  last_name: ['nachname', 'name', 'familienname', 'lastname', 'surname', 'familyname', 'nom'],
+  street: [
     'strasse',
     'str',
     'adresse',
@@ -140,10 +140,10 @@ const SYNONYMS: Record<string, string[]> = {
     'streetno',
     'addressline1'
   ],
-  plz: ['plz', 'postleitzahl', 'zip', 'zipcode', 'postcode', 'postalcode'],
-  ort: ['ort', 'wohnort', 'stadt', 'city', 'town', 'place'],
-  land: ['land', 'country'],
-  geburtsdatum: [
+  postcode: ['plz', 'postleitzahl', 'zip', 'zipcode', 'postcode', 'postalcode'],
+  city: ['ort', 'wohnort', 'stadt', 'city', 'town', 'place'],
+  country: ['land', 'country'],
+  birth_date: [
     'geburtsdatum',
     'geburtstag',
     'gebdatum',
@@ -154,9 +154,9 @@ const SYNONYMS: Record<string, string[]> = {
     'dob'
   ],
   email: ['email', 'mail', 'emailadresse', 'emailaddress'],
-  telefon: ['telefon', 'tel', 'telefonprivat', 'festnetz', 'phone', 'telephone', 'landline'],
+  phone: ['telefon', 'tel', 'telefonprivat', 'festnetz', 'phone', 'telephone', 'landline'],
   mobile: ['mobile', 'mobil', 'natel', 'handy', 'mobiltelefon', 'mobilephone', 'cell', 'cellphone'],
-  eintritt: [
+  date_joined: [
     'eintritt',
     'eintrittsdatum',
     'mitgliedseit',
@@ -165,9 +165,9 @@ const SYNONYMS: Record<string, string[]> = {
     'joined',
     'membersince'
   ],
-  austritt: ['austritt', 'austrittsdatum', 'dateleft', 'left', 'resigned'],
+  date_left: ['austritt', 'austrittsdatum', 'dateleft', 'left', 'resigned'],
   status: ['status', 'mitgliedschaft', 'membership', 'membershiptype'],
-  bemerkungen: [
+  notes: [
     'bemerkungen',
     'bemerkung',
     'notizen',

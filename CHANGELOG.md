@@ -4,7 +4,7 @@
 
 First release, for OpenCloud 4.0.x (OpenCloud Web 4.2).
 
-- Member list stored as a `.mitglieder` file, created via **New → Member directory**
+- Member list stored as a `.members` file, created via **New → Member directory**
 - Default fields for clubs (name, address, date of birth, contact details, membership dates,
   status, notes), fully customizable
 - Inline editing in the table and a detail dialog per member

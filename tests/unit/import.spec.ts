@@ -53,48 +53,49 @@ describe('import', () => {
     const { fields } = createDirectory(en)
     expect(
       guessMapping(['First Name', 'Surname', 'ZIP Code', 'Date of Birth', 'E-Mail'], fields)
-    ).toEqual(['vorname', 'nachname', 'plz', 'geburtsdatum', 'email'])
+    ).toEqual(['first_name', 'last_name', 'postcode', 'birth_date', 'email'])
   })
 
   it('maps known column names, including synonyms', () => {
     const { fields } = createDirectory(en)
     expect(
       guessMapping(['Vorname', 'Name', 'Natel', 'Geburtstag', 'Lieblingsfarbe'], fields)
-    ).toEqual(['vorname', 'nachname', 'mobile', 'geburtsdatum', NEW_FIELD])
+    ).toEqual(['first_name', 'last_name', 'mobile', 'birth_date', NEW_FIELD])
   })
 
   it('builds members, new fields and select options', () => {
     const { fields } = createDirectory(en)
     const table = parseCsv(
-      'Vorname;Status;Geburtsdatum;Eintritt;Strasse;Nr;Intern\n' +
-        'Anna;Vorstand;7.3.1985;2010;Hauptstr.;5;x\n' +
+      'First name;Status;Date of birth;City;Street;No;Internal\n' +
+        'Anna;Board;7.3.1985;2010;Main St.;5;x\n' +
         ';;;;;;\n'
     )
-    const mapping = ['vorname', 'status', 'geburtsdatum', NEW_FIELD, 'strasse', 'strasse', IGNORE]
+    const mapping = ['first_name', 'status', 'birth_date', NEW_FIELD, 'street', 'street', IGNORE]
     const result = buildImport(table, mapping, fields)
 
     expect(result.members).toHaveLength(1)
     expect(result.members[0].values).toEqual({
-      vorname: 'Anna',
-      status: 'Vorstand',
-      geburtsdatum: '1985-03-07',
-      eintritt_2: '2010',
-      strasse: 'Hauptstr. 5'
+      first_name: 'Anna',
+      status: 'Board',
+      birth_date: '1985-03-07',
+      city_2: '2010',
+      street: 'Main St. 5'
     })
-    expect(result.fields.find((f) => f.id === 'status')?.options).toContain('Vorstand')
-    expect(result.fields.find((f) => f.id === 'eintritt_2')).toMatchObject({
-      label: 'Eintritt',
+    expect(result.fields.find((f) => f.id === 'status')?.options).toContain('Board')
+    // a new field whose label collides with an existing field id gets a unique id
+    expect(result.fields.find((f) => f.id === 'city_2')).toMatchObject({
+      label: 'City',
       type: 'text'
     })
     // the original field definitions are not mutated
-    expect(fields.find((f) => f.id === 'status')?.options).not.toContain('Vorstand')
+    expect(fields.find((f) => f.id === 'status')?.options).not.toContain('Board')
     expect(result.invalidDates).toBe(0)
   })
 
   it('keeps unrecognized dates as text and counts them', () => {
     const { fields } = createDirectory(en)
-    const result = buildImport(parseCsv('Geburtsdatum\n1985\n'), ['geburtsdatum'], fields)
-    expect(result.members[0].values.geburtsdatum).toBe('1985')
+    const result = buildImport(parseCsv('Geburtsdatum\n1985\n'), ['birth_date'], fields)
+    expect(result.members[0].values.birth_date).toBe('1985')
     expect(result.invalidDates).toBe(1)
   })
 })

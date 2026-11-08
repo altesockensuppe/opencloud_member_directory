@@ -42,13 +42,13 @@ Only OpenCloud 4.0.x has been tested.
 See also the OpenCloud documentation on
 [web applications](https://docs.opencloud.eu/docs/admin/configuration/web-applications/).
 
-1. Download `mitgliederverzeichnis-<version>.zip` from the releases page, or build it yourself
+1. Download `member-directory-<version>.zip` from the releases page, or build it yourself
    (see [Development](#development)).
 2. Extract the archive into the web apps directory, so that you end up with a folder
-   `mitgliederverzeichnis` containing `manifest.json` and `js/`:
-   - default: `$OC_DATA_DIR/web/assets/apps/mitgliederverzeichnis/`
+   `member-directory` containing `manifest.json` and `js/`:
+   - default: `$OC_DATA_DIR/web/assets/apps/member-directory/`
    - [opencloud-compose](https://github.com/opencloud-eu/opencloud-compose):
-     `config/opencloud/apps/mitgliederverzeichnis/`
+     `config/opencloud/apps/member-directory/`
 3. Restart OpenCloud, e.g. `docker compose restart opencloud`.
 4. Reload the browser (Ctrl+Shift+R).
 
@@ -56,7 +56,7 @@ When updating, delete the old contents of the folder first. The file names in `j
 every build.
 
 The app then shows up in the app switcher, under **New → Member directory** in the file view, and
-`.mitglieder` files open with it.
+`.members` files open with it.
 
 ## Usage
 
@@ -114,20 +114,19 @@ them everywhere in OpenCloud.
 
 ## File format
 
-A member directory is a JSON file with the extension `.mitglieder`:
+A member directory is a JSON file with the extension `.members`:
 
 ```json
 {
   "version": 1,
   "title": "Sports Club Example",
-  "fields": [{ "id": "vorname", "label": "First name", "type": "text", "showInList": true }],
-  "members": [{ "id": "…", "values": { "vorname": "Anna", "geburtsdatum": "1985-04-12" } }]
+  "fields": [{ "id": "first_name", "label": "First name", "type": "text", "showInList": true }],
+  "members": [{ "id": "…", "values": { "first_name": "Anna", "birth_date": "1985-04-12" } }]
 }
 ```
 
-Dates are stored as `YYYY-MM-DD`. The app id (`mitgliederverzeichnis`), the file extension and the
-ids of the default fields are German for historical reasons and are kept for compatibility with
-existing files.
+Dates are stored as `YYYY-MM-DD`. Field ids are stable and independent of the language, only the
+labels are shown to users.
 
 ## Development
 
@@ -152,7 +151,7 @@ demo users). `dist/` is mounted as the app.
 | Path                  | Contents                                                    |
 | --------------------- | ----------------------------------------------------------- |
 | `src/index.ts`        | App registration: file type, routes, app switcher entry     |
-| `src/App.vue`         | Member list (opened for `.mitglieder` files)                |
+| `src/App.vue`         | Member list (opened for `.members` files)                   |
 | `src/components/`     | Dialogs for members, fields, import and export              |
 | `src/model.ts`        | Data model, default fields, parsing, formatting, sorting    |
 | `src/import.ts`       | CSV parsing, column mapping, value conversion               |
@@ -168,7 +167,7 @@ New user-facing texts are written in English in the code (`t('…')`) and transl
 
 1. Update `version` in `package.json` and add an entry to [`CHANGELOG.md`](CHANGELOG.md).
 2. Commit, then create and push a tag, e.g. `git tag v0.1.0 && git push origin v0.1.0`.
-3. The release workflow builds the app and attaches `mitgliederverzeichnis-<version>.zip` to a
+3. The release workflow builds the app and attaches `member-directory-<version>.zip` to a
    GitHub release.
 
 ## License

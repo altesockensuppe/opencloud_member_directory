@@ -1,5 +1,5 @@
 {
-  "name": "web-app-mitgliederverzeichnis",
+  "name": "web-app-member-directory",
   "version": "0.1.0",
   "description": "Member directory for clubs and associations as an OpenCloud web app: manage members, share them, import CSV, export Excel/PDF/CSV",
   "license": "Apache-2.0",

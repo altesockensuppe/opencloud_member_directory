@@ -39,12 +39,12 @@ jobs:
       # the archive contains the app folder, ready to be extracted into the web apps directory
       - name: Package
         run: |
-          mkdir -p package/mitgliederverzeichnis
-          cp -r dist/. package/mitgliederverzeichnis/
+          mkdir -p package/member-directory
+          cp -r dist/. package/member-directory/
           cd package
-          zip -r "../mitgliederverzeichnis-$VERSION.zip" mitgliederverzeichnis
+          zip -r "../member-directory-$VERSION.zip" member-directory
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: mitgliederverzeichnis-${{ env.VERSION }}.zip
+          files: member-directory-${{ env.VERSION }}.zip
           generate_release_notes: true

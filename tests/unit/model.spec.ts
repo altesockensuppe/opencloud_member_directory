@@ -17,10 +17,10 @@ const de = createTranslator('de', translations.de)
 
 describe('model', () => {
   it('creates a default directory from an empty file', () => {
-    const dir = parseDirectory('', de, 'Turnverein')
-    expect(dir.title).toBe('Turnverein')
+    const dir = parseDirectory('', de, 'Sports club')
+    expect(dir.title).toBe('Sports club')
     expect(dir.members).toEqual([])
-    expect(dir.fields.map((f) => f.id)).toContain('geburtsdatum')
+    expect(dir.fields.map((f) => f.id)).toContain('birth_date')
   })
 
   it('creates the default fields in the language of the user', () => {
@@ -28,8 +28,8 @@ describe('model', () => {
     const english = createDirectory(en)
     expect(german.title).toBe('Mitgliederverzeichnis')
     expect(english.title).toBe('Member directory')
-    expect(german.fields.find((f) => f.id === 'nachname')?.label).toBe('Nachname')
-    expect(english.fields.find((f) => f.id === 'nachname')?.label).toBe('Last name')
+    expect(german.fields.find((f) => f.id === 'last_name')?.label).toBe('Nachname')
+    expect(english.fields.find((f) => f.id === 'last_name')?.label).toBe('Last name')
     expect(german.fields.find((f) => f.id === 'status')?.options?.[0]).toBe('Aktiv')
     expect(english.fields.find((f) => f.id === 'status')?.options?.[0]).toBe('Active')
     // the ids stay the same, so files work in both languages
@@ -38,7 +38,7 @@ describe('model', () => {
 
   it('round-trips through serialize/parse', () => {
     const dir = createDirectory(de, 'Test')
-    dir.members.push({ id: 'a', values: { vorname: 'Anna', aktiv: true } })
+    dir.members.push({ id: 'a', values: { first_name: 'Anna', active: true } })
     expect(parseDirectory(serializeDirectory(dir), en)).toEqual(dir)
   })
 
@@ -59,11 +59,11 @@ describe('model', () => {
   })
 
   it('sorts with empty values last and numbers naturally', () => {
-    const field = { id: 'nummer', label: 'Nr', type: 'text' as const, showInList: true }
+    const field = { id: 'member_no', label: 'Nr', type: 'text' as const, showInList: true }
     const members = [
-      { id: '1', values: { nummer: '10' } },
+      { id: '1', values: { member_no: '10' } },
       { id: '2', values: {} },
-      { id: '3', values: { nummer: '2' } }
+      { id: '3', values: { member_no: '2' } }
     ]
     const sorted = [...members].sort((a, b) => compareMembers(a, b, field, 'asc'))
     expect(sorted.map((m) => m.id)).toEqual(['3', '1', '2'])
@@ -73,7 +73,7 @@ describe('model', () => {
     const dir = createDirectory(de)
     const member = {
       id: '1',
-      values: { vorname: 'Anna', ort: 'Zürich', geburtsdatum: '1985-03-07' }
+      values: { first_name: 'Anna', city: 'Zürich', birth_date: '1985-03-07' }
     }
     expect(matchesSearch(member, dir.fields, 'anna zür', de)).toBe(true)
     expect(matchesSearch(member, dir.fields, 'bern', de)).toBe(false)
@@ -85,12 +85,15 @@ describe('model', () => {
   it('proposes the next member number', () => {
     const dir = createDirectory(en)
     expect(nextMemberNumber(dir)).toBe('1')
-    dir.members.push({ id: 'a', values: { nummer: '41' } }, { id: 'b', values: { nummer: 'x' } })
+    dir.members.push(
+      { id: 'a', values: { member_no: '41' } },
+      { id: 'b', values: { member_no: 'x' } }
+    )
     expect(nextMemberNumber(dir)).toBe('42')
   })
 
   it('derives unique field ids', () => {
-    expect(fieldIdFromLabel('Jahresbeitrag bezahlt?', [])).toBe('jahresbeitrag_bezahlt')
+    expect(fieldIdFromLabel('Annual fee paid?', [])).toBe('annual_fee_paid')
     expect(fieldIdFromLabel('Grösse', ['groesse'])).toBe('groesse_2')
   })
 })

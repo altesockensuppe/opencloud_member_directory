@@ -1,9 +1,17 @@
 {
-  "name": "web-app-member-directory",
+  "name": "opencloud-member-directory",
   "version": "0.1.0",
   "description": "Member directory for clubs and associations as an OpenCloud web app: manage members, share them, import CSV, export Excel/PDF/CSV",
   "license": "Apache-2.0",
   "author": "AlteSocke",
+  "homepage": "https://github.com/altesockensuppe/opencloud_member_directory#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altesockensuppe/opencloud_member_directory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/altesockensuppe/opencloud_member_directory/issues"
+  },
   "keywords": [
     "opencloud",
     "opencloud-web",
